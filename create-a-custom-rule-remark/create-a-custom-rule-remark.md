@@ -1,5 +1,9 @@
 > _TL;DR a step by step guide on how to create and configure a markdown linting rule using `remark` and `remark-lint`_
 
+_You can find the repository with the example code here: https://github.com/floroz/blog-posts/tree/main/create-a-custom-rule-remark_
+
+## Custom lint rules in Markdown files
+
 Markdown is a great tool for productivity when it comes to creating content, blog posts, documentation, etc.
 
 It allows us to quickly write text documents for the web without worrying about formatting, font and text properties, or having to set up HTML boilerplate ourselves.
