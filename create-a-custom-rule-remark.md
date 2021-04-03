@@ -1,11 +1,3 @@
----
-title: Create a custom lint rule for markdown using `remark` and `remark-lint`
-published: false
-description: A step by step guide on how to create your own custom linting rule for markdown files, using remark and remark-lint.
-tags:
-//cover_image: https://direct_url_to_image.jpg
----
-
 > _TL;DR a step by step guide on how to create and configure a markdown linting rule using `remark` and `remark-lint`_
 
 Markdown is a great tool for productivity when it comes to creating content, blog posts, documentation, etc.
