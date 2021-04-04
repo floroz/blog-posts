@@ -1,3 +1,7 @@
+---
+title: Create a Markdown custom linting rule for any JavaScript project using remark and remark-lint
+---
+
 > **TL;DR** In this article we are going to setup a basic JavaScript project to parse and compile markdown, and to create and configure custom linting rules using `remark` and `remark-lint`.
 
 - Check the [repository](https://github.com/floroz/blog-posts/tree/main/create-a-custom-rule-remark) with the example code.
@@ -25,6 +29,17 @@ If you are interested in integrating your markdown rules in your `ESLint` config
 
 _Let's get started!_
 
+## Table of Contents
+
+- [Set up the project](#1-set-up-the-project)
+- [Set up remark](#2-set-up-remark)
+- [The no-invalid-gif rule](#3-the-no-invalid-gif-rule)
+- [Create the custom rule](#4-create-the-custom-rule)
+- [Rule arguments](#5-rule-arguments)
+- [Rule implementation](#6-rule-implementation)
+- [Import the rule in your remark config](#7-import-the-rule-in-your-remark-config)
+- [Apply the rule](#8-apply-the-rule)
+
 ### 1. Set up the project
 
 Let's set up the project and start adding our dependencies.
@@ -49,7 +64,7 @@ Because we will be working with [ASTs](https://en.wikipedia.org/wiki/Abstract_sy
 yarn unified-lint-rule unist-util-generated unist-util-visit
 ```
 
-These will help us creating and managing our custom rules (we'll get there soon!).
+These will help us creating and managing our custom rules.
 
 ### 2. Set up remark
 
@@ -64,7 +79,7 @@ module.exports = {
 };
 ```
 
-then in our `package.json` let's add the following script, which will process all the markdown file within our project
+Then, in our `package.json`, let's add the following script, which will process all the markdown file within our project:
 
 ```json
 "scripts": {
@@ -72,7 +87,7 @@ then in our `package.json` let's add the following script, which will process al
 }
 ```
 
-Now let's create a `doc.md`, the markdown file we want to lint:
+Let's create a `doc.md`, the markdown file we want to lint:
 
 ```md
 ## Best pets! <3
@@ -94,7 +109,7 @@ doc.md: no issues found
 
 All good, the file has been processed, and because we haven't specified any plugins nor lint rule, no issues are found.
 
-### 3. The `no-invalid-gif` rule:
+### 3. The no-invalid-gif rule:
 
 Let's imagine we want to write a rule that checks whether a `.gif` file is used within an image.
 
@@ -110,7 +125,7 @@ Some funny images of our favourite pets
 ![a lovely dog](lovely-dog.png)
 ```
 
-We expect an _error_ or _warning_ pointing to `funny-cat.gif`, because the file extension `.gif` violates our rule.
+We would expect an _error_ or _warning_ pointing to `funny-cat.gif`, because the file extension `.gif` violates our rule.
 
 ### 4. Create the custom rule
 
@@ -210,15 +225,13 @@ module.exports = {
 };
 ```
 
-### 8. Run the linter
+### 8. Apply the rule
 
 If you run `yarn lint`, you should see the following message in the terminal:
 
 ```bash
  5:1-5:30  warning  Invalid image file extentions. Please do not use gifs  no-gif-allowed  remark-lint
 ```
-
-The violation has been correctly found and reported.
 
 #### Congratulations!
 
