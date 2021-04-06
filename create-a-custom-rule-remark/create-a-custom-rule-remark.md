@@ -20,7 +20,7 @@ As these solutions scale, and more content writers and developers start contribu
 - [Rule implementation](#rule-implementation)
 - [Import the rule in your remark config](#import-the-rule-in-your-remark-config)
 - [Apply the rule on the Markdown file](#apply-the-rule-on-the-markdown-file)
-- [ESlint and Remark](#eslint-and-remark)
+- [ESlint MDX and Remark](#eslint-mdx-and-remark)
 
 <hr/>
 
@@ -246,5 +246,61 @@ doc.md
 
 Ouch! it seems our `.mdx` file is not seen or parsed by `remark` and the rule is not applied! Lets' take care of that.
 
-### ESlint and Remark
+### ESlint MDX and Remark
 
+In order to correctly parse and lint MDX files, we will need a parser. A great solution for this is `eslint-mdx`, so let's install it.
+
+```bash
+yarn add eslint eslint-plugin-mdx
+```
+
+- [ESLint](https://github.com/eslint/eslint): the most popular tool for linting JavaScript code.
+- [ESLint MDX](https://github.com/mdx-js/eslint-mdx): an ESLint plugin/parser for MDX files.
+
+We will need to create a ESLint config to pass the settings for MDX and configure the plugin.
+
+Let's create a `.eslintrc.js` in the root of our project with the following:
+
+```js
+module.exports = {
+  extends: ["plugin:mdx/recommended"],
+  parserOptions: {
+    ecmaVersion: 2015,
+  },
+  settings: {
+    // Integration with remark-lint plugins, 
+    // it will read remark's configuration automatically via .remarkrc.js
+    "mdx/remark": true,
+  },
+};
+```
+So what is going on here?
+
+1. We have created a new ESLint configuration that uses the `eslint-plugin-mdx.
+2. `eslint-plugin-mdx` will use `eslint-mdx` to parse and process MDX files.
+3. We have declared the `mdx/remark` setting, which integrates our remark plugins system into ESLint. This means that our remark custom rule, and any other plugin in our `.remarkrc.js`, will be pulled into ESLint processor and applied.
+
+Okay, now it's time to update our `package.json` with a new `lint` script:
+
+```json
+"scripts": {
+  "lint": "eslint . --ext md,mdx"
+}
+```
+
+We are configuring ESLint to parse and process all the files in our project with either a `.md` or `.mdx` extension.
+
+
+If we now run `yarn lint` we should see in the terminal:
+
+```bash
+$ eslint . --ext md,mdx
+
+doc.md
+  5:1  warning  Invalid image file extentions. Please do not use gifs  remark-lint-no-gif-allowed
+
+doc.mdx
+  7:1  warning  Invalid image file extentions. Please do not use gifs  remark-lint-no-gif-allowed
+```
+
+Our custom rule has been correctly applied both to Markdown and MDX!
