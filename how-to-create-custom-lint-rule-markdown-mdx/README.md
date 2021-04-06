@@ -6,39 +6,48 @@ There is a myriad of solutions out there to convert our Markdown into HTML pages
 
 In the last years, modern web development architectures based on client-side JavaScript, reusable APIs and prebuilt Markup ([JAMstack](https://jamstack.org/what-is-jamstack/)), and new web frameworks ([Gatsby](https://github.com/gatsbyjs/gatsby), [Gridsome](https://github.com/gridsome/gridsome) or [Next.js](https://github.com/vercel/next.js)), have gained increased popularity amongst developers, and even allowed us to start using JSX within our Markdown ([MDX](https://mdxjs.com/)).
 
-As these solutions scale, and more content writers and developers start contributing to these documents, discussions around what are the _best practices_, or what _is allowed_ and what _is forbidden_, will introduce the need within team to adopt linting programs to help maintaining and improve the code, and markdown, quality.
+As these solutions scale, and more content writers and developers start contributing to these documents, teams are encouraged to adopt linting programs to shape best practices around markdown and MDX, and enforcing styles and conventions.
+
+In this article, we'll go through how to setup your own custom lint rule for Markdown and MDX, starting from scratch.
+
+_Lets' get started!_
 
 ### Table of Contents
 
 - [Set up the project](#set-up-the-project)
 - [Set up remark](#set-up-remark)
-- [The no-invalid-gif rule:](#the-no-invalid-gif-rule)
+- [The no-invalid-gif rule](#the-no-invalid-gif-rule)
 - [Create the custom rule](#create-the-custom-rule)
 - [Rule arguments](#rule-arguments)
 - [Rule implementation](#rule-implementation)
 - [Import the rule in your remark config](#import-the-rule-in-your-remark-config)
 - [Apply the rule on the Markdown file](#apply-the-rule-on-the-markdown-file)
+- [Markdown to MDX](#markdown-to-mdx)
 - [ESlint MDX and Remark](#eslint-mdx-and-remark)
 
 Fork this [repository](https://github.com/floroz/blog-posts/tree/main/how-to-create-custom-lint-rule-markdown-mdx) with the complete tutorial, if you don't want to start from scratch.
 
 ## Set up the project
 
-Let's set up the project and start adding our dependencies.
+Create a new folder and navigate inside it from your Terminal. For this example I will be using UNIX commands (macOS and Linux compatible).
+Now we can generate our `package.json`
 
 ```bash
+mkdir my-custom-rule
+
+cd my-custom-rule
+
 yarn init -y
 ```
 
-Now that we have a `package.json`, we can install our processor and lint plugin:
+Now we can start installing our dependencies.
 
 ```bash
-yarn add remark remark-lint remark-cli
+yarn add remark-lint remark-cli
 ```
 
-- [remark](https://github.com/remarkjs/remark): a markdown processor.
-- [remark-lint](https://github.com/remarkjs/remark-lint): remark plugin to lint markdown.
-- [remark-cli](https://github.com/remarkjs/remark/tree/main/packages/remark-cli): CLI.
+- [remark-lint](https://github.com/remarkjs/remark-lint): a plugin to lint markdown built on [remark](https://github.com/remarkjs/remark): (a markdown processor).
+- [remark-cli](https://github.com/remarkjs/remark/tree/main/packages/remark-cli): remark CLI.
 
 Because we will be working with [ASTs](https://en.wikipedia.org/wiki/Abstract_syntax_tree), we will also need some utilities:
 
@@ -91,7 +100,7 @@ doc.md: no issues found
 
 All good, the file has been processed, and because we haven't specified any plugins nor lint rule, no issues are found.
 
-## The no-invalid-gif rule:
+## The no-invalid-gif rule
 
 Let's imagine we want to write a rule that checks whether a `.gif` file is used within an image.
 
