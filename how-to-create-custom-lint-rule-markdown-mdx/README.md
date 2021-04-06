@@ -1,8 +1,8 @@
-# How to create custom lint rules for Markdown and MDX using remark and ESLint
+# How to create a custom lint rule for Markdown and MDX using remark and ESLint
 
 > **TL;DR** In this article we are going to setup a basic JavaScript project to parse and compile markdown, and to create and configure custom linting rules using `remark` and `remark-lint`.
 >
-> - Check the [repository](https://github.com/floroz/blog-posts/tree/main/how-to-create-custom-lint-rules-markdown-mdx) with the example code.
+> - Check the [repository](https://github.com/floroz/blog-posts/tree/main/how-to-create-custom-lint-rule-markdown-mdx) with the example code.
 
 Everyone loves Markdown. It is an exceptional tool to create text documents, blog posts, documentation articles, and it allows us to do so without having to worry about formatting, font, and text properties, or having to set up HTML boilerplate.
 
