@@ -1,9 +1,6 @@
----
-title: How to create a custom lint rule for Markdown and MDX using remark plugins and ESLint
----
-
 > **TL;DR** In this article we are going to setup a basic JavaScript project to parse and compile markdown, and to create and configure custom linting rules using `remark` and `remark-lint`.
-> - Check the [repository](https://github.com/floroz/blog-posts/tree/main/create-a-custom-rule-remark) with the example code.
+>
+> - Check the [repository](https://github.com/floroz/blog-posts/tree/main/custom-lint-rules-for-markdown-mdx-with-remark-and-eslint) with the example code.
 
 Everyone loves Markdown. It is an exceptional tool to create text documents, blog posts, documentation articles, and it allows us to do so without having to worry about formatting, font, and text properties, or having to set up HTML boilerplate.
 
@@ -23,7 +20,6 @@ As these solutions scale, and more content writers and developers start contribu
 - [ESlint MDX and Remark](#eslint-mdx-and-remark)
 
 <hr/>
-
 
 ### Set up the project
 
@@ -237,7 +233,8 @@ Some funny images of our favourite pets
 
 ![a lovely dog](lovely-dog.png)
 ```
-Fine, we now run our `yarn lint` again and check the terminal output: 
+
+Fine, we now run our `yarn lint` again and check the terminal output:
 
 ```bash
 doc.md
@@ -268,12 +265,13 @@ module.exports = {
     ecmaVersion: 2015,
   },
   settings: {
-    // Integration with remark-lint plugins, 
+    // Integration with remark-lint plugins,
     // it will read remark's configuration automatically via .remarkrc.js
     "mdx/remark": true,
   },
 };
 ```
+
 So what is going on here?
 
 1. We have created a new ESLint configuration that uses the `eslint-plugin-mdx.
@@ -289,7 +287,6 @@ Okay, now it's time to update our `package.json` with a new `lint` script:
 ```
 
 We are configuring ESLint to parse and process all the files in our project with either a `.md` or `.mdx` extension.
-
 
 If we now run `yarn lint` we should see in the terminal:
 
