@@ -4,7 +4,7 @@
 >
 > - Check the [repository](https://github.com/floroz/blog-posts/tree/main/how-to-create-custom-lint-rule-markdown-mdx) with the example code.
 
-Everyone loves Markdown. It is an exceptional tool to create text documents, blog posts, documentation articles, and it allows us to do so without having to worry about formatting, font, and text properties, or having to set up HTML boilerplate.
+Everyone loves Markdown. It is an exceptional tool to create text documents, blog posts, documentation articles, and it allows us to do so without having to worry about formatting, font styles, or having to set up HTML boilerplate.
 
 There is a myriad of solutions out there to convert our Markdown into HTML pages or to scaffold entire websites out of our documents.
 
