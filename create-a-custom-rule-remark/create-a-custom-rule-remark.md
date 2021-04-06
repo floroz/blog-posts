@@ -1,12 +1,9 @@
 ---
-title: Create a Markdown custom linting rule for any JavaScript project using remark and remark-lint
+title: How to create a custom lint rule for Markdown and MDX using remark plugins and ESLint
 ---
 
 > **TL;DR** In this article we are going to setup a basic JavaScript project to parse and compile markdown, and to create and configure custom linting rules using `remark` and `remark-lint`.
-
-- Check the [repository](https://github.com/floroz/blog-posts/tree/main/create-a-custom-rule-remark) with the example code.
-
-## Modern Markdown
+> - Check the [repository](https://github.com/floroz/blog-posts/tree/main/create-a-custom-rule-remark) with the example code.
 
 Everyone loves Markdown. It is an exceptional tool to create text documents, blog posts, documentation articles, and it allows us to do so without having to worry about formatting, font, and text properties, or having to set up HTML boilerplate.
 
@@ -16,31 +13,19 @@ In the last years, modern web development architectures based on client-side Jav
 
 As these solutions scale, and more content writers and developers start contributing to these documents, discussions around what are the _recommended_ practices, or what is _allowed_ and what is _forbidden_, will introduce the need for linting programs to enforce and encourage best standards.
 
-### Wait, isn't this about ESLint?
+- [Set up remark](#set-up-remark)
+- [The no-invalid-gif rule:](#the-no-invalid-gif-rule)
+- [Create the custom rule](#create-the-custom-rule)
+- [Rule arguments](#rule-arguments)
+- [Rule implementation](#rule-implementation)
+- [Import the rule in your remark config](#import-the-rule-in-your-remark-config)
+- [Apply the rule on the Markdown file](#apply-the-rule-on-the-markdown-file)
+- [ESlint and Remark](#eslint-and-remark)
 
-_"Linting is the process of running a program that will analyze code for potential errors"_ [[cit](https://stackoverflow.com/questions/8503559/what-is-linting#8503586)].
+<hr/>
 
-`ESLint` parses JavaScript files into _ES Abstract Syntax Trees_ and evaluates patterns in code.
 
-In the same way, `remark` parses markdown files into _Markdown Abstract Syntax Trees_ and `remark-lint` the pattern in markdown.
-
-It's possible to integrate `remark-lint` with `ESLint`.
-If you are interested in integrating your markdown rules in your `ESLint` configuration, refer to [remark-lint integration](https://github.com/remarkjs/remark-lint#integrations) section.
-
-_Let's get started!_
-
-## Table of Contents
-
-- [Set up the project](#1-set-up-the-project)
-- [Set up remark](#2-set-up-remark)
-- [The no-invalid-gif rule](#3-the-no-invalid-gif-rule)
-- [Create the custom rule](#4-create-the-custom-rule)
-- [Rule arguments](#5-rule-arguments)
-- [Rule implementation](#6-rule-implementation)
-- [Import the rule in your remark config](#7-import-the-rule-in-your-remark-config)
-- [Apply the rule](#8-apply-the-rule)
-
-### 1. Set up the project
+### Set up the project
 
 Let's set up the project and start adding our dependencies.
 
@@ -66,7 +51,7 @@ yarn unified-lint-rule unist-util-generated unist-util-visit
 
 These will help us creating and managing our custom rules.
 
-### 2. Set up remark
+### Set up remark
 
 With our dependencies all installed, we can start creating a `.remarkrc.js`, which will contain all the plugins that will be consumed by the remark processor.
 For details about alternative or advanced configurations, please refer to [Configuring remark-lint](https://github.com/remarkjs/remark-lint#configuring-remark-lint).
@@ -109,7 +94,7 @@ doc.md: no issues found
 
 All good, the file has been processed, and because we haven't specified any plugins nor lint rule, no issues are found.
 
-### 3. The no-invalid-gif rule:
+### The no-invalid-gif rule:
 
 Let's imagine we want to write a rule that checks whether a `.gif` file is used within an image.
 
@@ -127,7 +112,7 @@ Some funny images of our favourite pets
 
 We would expect an _error_ or _warning_ pointing to `funny-cat.gif`, because the file extension `.gif` violates our rule.
 
-### 4. Create the custom rule
+### Create the custom rule
 
 Let's create a new folder `rules` under the root directory, where we will place all of our custom rules, and create a new file in it named `no-gif-allowed.js`.
 
@@ -154,7 +139,7 @@ module.exports = rule("my-project:no-gif-allowed", noGifAllowed);
 
 This can help you when wanting to create a group of rules under the same _label_ or _namespace_.
 
-### 5. Rule arguments
+### Rule arguments
 
 Your rule function will receive three arguments.
 
@@ -166,7 +151,7 @@ function noGifAllowed(tree, file, options) {}
 - `file` (_required_): a [virtual file format](https://github.com/vfile/vfile).
 - `options` (_optional_): additional information passed to the rule by the remark plugins definition.
 
-### 6. Rule implementation
+### Rule implementation
 
 Because we will be inspecting a [mdast](https://github.com/syntax-tree/mdast), which is a markdown abstract syntax tree built upon [unist](https://github.com/syntax-tree/unist), we can take advantage of the many existing [unist utilities](https://github.com/syntax-tree/unist#utilities) to inspect our tree's nodes.
 
@@ -210,7 +195,7 @@ function noGifAllowed(tree, file, options) {
 module.exports = rule("remark-lint:no-gif-allowed", noGifAllowed);
 ```
 
-### 7. Import the rule in your remark config
+### Import the rule in your remark config
 
 Now that our custom rule is defined, and ready to be used, we need to add it to our `remark` configuration.
 
@@ -225,7 +210,7 @@ module.exports = {
 };
 ```
 
-### 8. Apply the rule
+### Apply the rule on the Markdown file
 
 If you run `yarn lint`, you should see the following message in the terminal:
 
@@ -233,6 +218,33 @@ If you run `yarn lint`, you should see the following message in the terminal:
  5:1-5:30  warning  Invalid image file extentions. Please do not use gifs  no-gif-allowed  remark-lint
 ```
 
-#### Congratulations!
+The rule works, congratulations!
 
-The violation has been correctly found and reported.
+### Markdown to MDX
+
+Hold on, we are now told that we need to start supporting into our project also MDX files, and that our rules must apply to those as well.
+
+A new file is created in the project, `doc.mdx`,to start using our new `ParagraphComponent` inside MDX.
+
+```mdx
+## Best pets! <3
+
+<ParagraphComponent props="I am a new paragraph" />
+
+Some funny images of our favourite pets
+
+![a funny cat](funny-cat.gif)
+
+![a lovely dog](lovely-dog.png)
+```
+Fine, we now run our `yarn lint` again and check the terminal output: 
+
+```bash
+doc.md
+  5:1-5:30  warning  Invalid image file extentions. Please do not use gifs  no-gif-allowed  remark-lint
+```
+
+Ouch! it seems our `.mdx` file is not seen or parsed by `remark` and the rule is not applied! Lets' take care of that.
+
+### ESlint and Remark
+
