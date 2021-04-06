@@ -4,9 +4,9 @@ Everyone loves Markdown. It is an exceptional tool to create text documents, blo
 
 There is a myriad of solutions out there to convert our Markdown into HTML pages or to scaffold entire websites out of our documents.
 
-In the last years, modern web development architectures based on client-side JavaScript, reusable APIs and prebuilt Markup ([JAMstack](https://jamstack.org/what-is-jamstack/)), and new web frameworks ([Gatsby](https://github.com/gatsbyjs/gatsby), [Gridsome](https://github.com/gridsome/gridsome) or [Next.js](https://github.com/vercel/next.js)), have gained increased popularity amongst developers, and allowed us to leverage Markdown not just to compile text documents, but to even output interactive UIs where our JavaScript lives within our Markdown ([MDX](https://mdxjs.com/)).
+In the last years, modern web development architectures based on client-side JavaScript, reusable APIs and prebuilt Markup ([JAMstack](https://jamstack.org/what-is-jamstack/)), and new web frameworks ([Gatsby](https://github.com/gatsbyjs/gatsby), [Gridsome](https://github.com/gridsome/gridsome) or [Next.js](https://github.com/vercel/next.js)), have gained increased popularity amongst developers, and even allowed us to start using JSX within our Markdown ([MDX](https://mdxjs.com/)).
 
-As these solutions scale, and more content writers and developers start contributing to these documents, discussions around what are the _recommended_ practices, or what is _allowed_ and what is _forbidden_, will introduce the need for linting programs to enforce and encourage best standards.
+As these solutions scale, and more content writers and developers start contributing to these documents, discussions around what are the _best practices_, or what _is allowed_ and what _is forbidden_, will introduce the need within team to adopt linting programs to help maintaining and improve the code, and markdown, quality.
 
 ### Table of Contents
 
