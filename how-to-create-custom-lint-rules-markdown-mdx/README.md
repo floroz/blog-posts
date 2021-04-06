@@ -41,7 +41,7 @@ yarn add remark remark-lint remark-cli
 ```
 
 - [remark](https://github.com/remarkjs/remark): a markdown processor.
-- [remark-lint](https://github.com/remarkjs/remark-lint): remark plugins to lint markdown.
+- [remark-lint](https://github.com/remarkjs/remark-lint): remark plugin to lint markdown.
 - [remark-cli](https://github.com/remarkjs/remark/tree/main/packages/remark-cli): CLI.
 
 Because we will be working with [ASTs](https://en.wikipedia.org/wiki/Abstract_syntax_tree), we will also need some utilities:
