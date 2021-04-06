@@ -12,6 +12,9 @@ In the last years, modern web development architectures based on client-side Jav
 
 As these solutions scale, and more content writers and developers start contributing to these documents, discussions around what are the _recommended_ practices, or what is _allowed_ and what is _forbidden_, will introduce the need for linting programs to enforce and encourage best standards.
 
+### Table of Contents
+
+- [Set up the project](#set-up-the-project)
 - [Set up remark](#set-up-remark)
 - [The no-invalid-gif rule:](#the-no-invalid-gif-rule)
 - [Create the custom rule](#create-the-custom-rule)
