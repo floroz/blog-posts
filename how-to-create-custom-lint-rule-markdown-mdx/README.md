@@ -12,7 +12,7 @@ In this article, we'll go through how to setup your own custom lint rule for Mar
 
 _Lets' get started!_
 
-### Table of Contents
+## Table of Contents
 
 - [Set up the project](#set-up-the-project)
 - [Set up remark](#set-up-remark)
