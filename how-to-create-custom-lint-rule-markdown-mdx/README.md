@@ -8,7 +8,7 @@ In the last years, modern web development architectures based on client-side Jav
 
 As these solutions scale, and more content writers and developers start contributing to these documents, teams are encouraged to adopt linting programs to shape best practices around markdown and MDX, and enforcing styles and conventions.
 
-In this article, we'll go through how to setup your own custom lint rule for Markdown and MDX, starting from scratch.
+In this article, we'll go through how to setup your own custom lint rule for a JavaScript project using Markdown and MDX, starting from scratch.
 
 _Lets' get started!_
 
@@ -27,7 +27,7 @@ _Lets' get started!_
 
 Fork this [repository](https://github.com/floroz/blog-posts/tree/main/how-to-create-custom-lint-rule-markdown-mdx) with the complete tutorial, if you don't want to start from scratch.
 
-## Set up the project
+##Set up the project
 
 Create a new folder and navigate inside it from your Terminal. For this example I will be using UNIX commands (macOS and Linux compatible).
 Now we can generate our `package.json`
@@ -136,6 +136,7 @@ Let's create a new folder `rules` under the root directory, where we will place 
 $ mkdir rules
 $ cd rules
 $ touch no-gif-allowed.js
+$ cd .. # return to project root
 ```
 
 _Remember_: the name of the folder and files, and where to place them within your project, is entirely up to you.
@@ -263,7 +264,7 @@ A new file is created in the project, `doc.mdx`,to start using our new `Paragrap
 ```mdx
 ## Best pets! <3
 
-<ParagraphComponent props="I am a new paragraph" />
+<ParagraphComponent text="I am a new paragraph" />
 
 Some funny images of our favourite pets
 
@@ -288,7 +289,7 @@ Ouch! it seems our `.mdx` file is not seen or parsed by `remark` and the rule is
 In order to correctly parse and lint MDX files, we will need a parser. A great solution for this is `eslint-mdx`, so let's install it.
 
 ```bash
-yarn add eslint eslint-plugin-mdx
+$ yarn add eslint eslint-plugin-mdx
 ```
 
 - [ESLint](https://github.com/eslint/eslint): the most popular tool for linting JavaScript code.
@@ -296,7 +297,15 @@ yarn add eslint eslint-plugin-mdx
 
 We will need to create a ESLint config to pass the settings for MDX and configure the plugin.
 
-Let's create a `.eslintrc.js` in the root of our project with the following:
+Let's create a `.eslintrc.js` in the root of our project,
+
+```bash
+$ touch .eslintrc.js
+```
+
+extends the `eslint-plugin-mdx` settings, and enable the `mdx/remark` rule.
+
+ESLint will use the MDX plugin to parse and process our markdown/mdx files, and will also pull in any `remark` configuration we have declared in our project.
 
 ```js
 module.exports = {
@@ -311,12 +320,6 @@ module.exports = {
   },
 };
 ```
-
-So what is going on here?
-
-1. We have created a new ESLint configuration that uses the `eslint-plugin-mdx.
-2. `eslint-plugin-mdx` will use `eslint-mdx` to parse and process MDX files.
-3. We have declared the `mdx/remark` setting, which integrates our remark plugins system into ESLint. This means that our remark custom rule, and any other plugin in our `.remarkrc.js`, will be pulled into ESLint processor and applied.
 
 Okay, now it's time to update our `package.json` with a new `lint` script:
 
@@ -342,6 +345,6 @@ doc.mdx
 
 **Congratulation!**
 
-Our custom rule has been correctly applied both to Markdown and MDX!
+Your custom rule has been correctly applied both to Markdown and MDX!
 
 [Back to Top](#table-of-contents)
